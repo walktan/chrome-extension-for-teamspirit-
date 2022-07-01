@@ -1,0 +1,22 @@
+{
+  "name": "input at teamspirit",
+  "manifest_version": 2,
+  "version": "0.1",
+  "content_scripts": [
+    {
+      "matches": ["https://*.lightning.force.com/*"],
+      "js": ["third-party/jquery-3.2.1.min.js","content.js"],
+      "run_at": "document_start"
+    }
+  ],
+	"background": {
+		"scripts": ["background.js"]
+  },
+	"permissions": [
+		"tabs",
+		"background",
+		"http://*/*",
+		"https://*/*"
+  ],
+  "browser_action": {}
+}
