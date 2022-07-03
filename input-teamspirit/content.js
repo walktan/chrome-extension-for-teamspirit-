@@ -11,7 +11,7 @@ const inputKintai = async () => {
   console.log("start inputKintai()");
   for ( const elem of $('table.month_frame td#mainTableArea tr td.vst.day_time0') ){
     elem.click();
-    isClicked = true;;
+    isClicked = true;
     await input(elem);
     await update(elem);
   };
@@ -20,19 +20,35 @@ const inputKintai = async () => {
 
 const input = (elem) => {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      $('#dlgInputTimeTabs #startTime').val(startAt);
-      $('#dlgInputTimeTabs #endTime').val(endAt);
-      $('button#dlgInpTimeOk').click();
-      resolve(true);
-    }, 1000)
+    const tmp = () => {
+      if($('button#dlgInpTimeOk').length > 0) {
+        $('#dlgInputTimeTabs #startTime').val(startAt);
+        $('#dlgInputTimeTabs #endTime').val(endAt);
+        $('button#dlgInpTimeOk').click();
+        resolve(true);
+      } else {
+        setTimeout(() => {
+          console.log("waiting for opning...");
+          tmp();
+        }, 500)
+      }
+    }
+    tmp();
   })
 }
 
 const update = (elem) => {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(true);
-    }, 3000)
+    const tmp = () => {
+      if($('button#dlgInpTimeOk').length < 1) {
+        resolve(true);
+      } else {
+        setTimeout(() => {
+          console.log("waiting for closing...");
+          tmp();
+        }, 500)
+      }
+    }
+    tmp();
   })
 }
